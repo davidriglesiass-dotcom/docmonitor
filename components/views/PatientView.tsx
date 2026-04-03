@@ -10,6 +10,20 @@ interface PatientViewProps {
   showToast: (msg: string) => void;
 }
 
+const GENDER_LABEL: Record<string, string> = {
+  femenino: 'Femenino',
+  masculino: 'Masculino',
+  otro: 'Otro',
+  'prefiero-no-decir': 'No especificado',
+};
+
+function formatDob(dob: string): string {
+  if (!dob) return '';
+  const [y, m, d] = dob.split('-');
+  const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  return `${parseInt(d)} ${months[parseInt(m) - 1]} ${y}`;
+}
+
 export default function PatientView({ patientId, onBack, onOpenModal, showToast }: PatientViewProps) {
   const [activeTab, setActiveTab] = useState<PatientTab>('resumen');
   const [treatments, setTreatments] = useState([
@@ -119,7 +133,16 @@ export default function PatientView({ patientId, onBack, onOpenModal, showToast 
         <div style={{ flex: 1 }}>
           <div className="ph-name">{patient.name}</div>
           <div className="ph-meta">
+            {/* Edad — calculada desde dob si está disponible */}
             <span>👤 {patient.age} años</span>
+            {/* Fecha de nacimiento */}
+            {patient.dob && (
+              <span>🎂 {formatDob(patient.dob)}</span>
+            )}
+            {/* Género */}
+            {patient.gender && (
+              <span>⚧ {GENDER_LABEL[patient.gender] ?? patient.gender}</span>
+            )}
             <span>📧 {patient.email}</span>
             <span>📱 {patient.phone}</span>
             <span>🩺 Paciente desde Feb 2026</span>
@@ -357,7 +380,7 @@ export default function PatientView({ patientId, onBack, onOpenModal, showToast 
             <div className="examen-item"><div className="examen-icon">⚗️</div><div><div style={{ fontSize: 13, fontWeight: 600 }}>Perfil hormonal (FSH, LH, E2)</div><div style={{ fontSize: 11, color: 'var(--amber)' }}>⏳ Pendiente</div></div></div>
           </div>
           <div className="card">
-            <div className="card-title">📎 Subidos por la paciente</div>
+            <div className="card-title">📎 Subidos por el paciente</div>
             <div className="examen-item">
               <div className="examen-icon">📄</div>
               <div style={{ flex: 1 }}><div style={{ fontSize: 13, fontWeight: 600 }}>Examen de sangre</div><div style={{ fontSize: 11, color: 'var(--gris-500)' }}>Feb 24</div></div>
