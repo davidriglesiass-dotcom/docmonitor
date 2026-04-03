@@ -1,4 +1,4 @@
-import { Patient, Appointment, WeekDay, Notification, Bloqueo, ICDCode, AdherenciaItem } from './types';
+import { Patient, Treatment, Appointment, WeekDay, Notification, Bloqueo, ICDCode, AdherenciaItem } from './types';
 
 export const PATIENTS: Patient[] = [
   { id: 'monica', name: 'Mónica Varela', initials: 'MV', age: 51, dob: '1974-08-12', gender: 'femenino', email: 'monica.v@email.com', phone: '+507 6XXX-XXXX', bgColor: '#EBF1FB', textColor: '#1B3A6B', condition: 'Perimenopausia', lastVisit: 'Feb 24', nextAppt: 'Hoy 9:00 AM', status: 'active', hasAlert: true, alertType: 'red' },
@@ -6,6 +6,46 @@ export const PATIENTS: Patient[] = [
   { id: 'carmen', name: 'Carmen López', initials: 'CL', age: 38, dob: '1987-11-05', gender: 'femenino', email: 'carmen.l@email.com', phone: '+507 6XXX-XXXX', bgColor: '#FEF3C7', textColor: '#D97706', condition: 'Primera consulta', lastVisit: '—', nextAppt: 'Hoy 12:00 PM', status: 'pending' },
   { id: 'lucia', name: 'Lucía Morales', initials: 'LM', age: 56, dob: '1969-06-18', gender: 'femenino', email: 'lucia.m@email.com', phone: '+507 6XXX-XXXX', bgColor: '#EBF1FB', textColor: '#1B3A6B', condition: 'Revisión exámenes', lastVisit: 'Feb 15', nextAppt: 'Hoy 2:00 PM', status: 'active', hasAlert: true, alertType: 'amber' },
   { id: 'ana', name: 'Ana García', initials: 'AG', age: 29, dob: '1996-01-30', gender: 'femenino', email: 'ana.g@email.com', phone: '+507 6XXX-XXXX', bgColor: '#FDEAEA', textColor: '#C0392B', condition: 'Urgencia pélvica', lastVisit: 'Mar 1', nextAppt: 'Hoy 3:30 PM', status: 'pending', hasAlert: true, alertType: 'red' },
+];
+
+// Indicaciones con frecuencia y duración estructuradas
+export const TREATMENTS: Treatment[] = [
+  {
+    id: 1,
+    descripcion: 'Amitriptilina 25mg',
+    dosis: '1 pastilla',
+    frecuencia: 1,
+    frecuencia_unidad: 'dia',
+    duracion: 0,
+    duracion_unidad: 'indefinido',
+    horas: ['22:00'],
+    notas: 'Tomar antes de dormir',
+    done: false,
+  },
+  {
+    id: 2,
+    descripcion: 'Angeliq',
+    dosis: '1 pastilla',
+    frecuencia: 1,
+    frecuencia_unidad: 'dia',
+    duracion: 0,
+    duracion_unidad: 'indefinido',
+    horas: ['08:00'],
+    notas: 'Tomar en ayunas',
+    done: false,
+  },
+  {
+    id: 3,
+    descripcion: 'Eliminar cigarro',
+    dosis: '—',
+    frecuencia: 1,
+    frecuencia_unidad: 'dia',
+    duracion: 0,
+    duracion_unidad: 'indefinido',
+    horas: [],
+    notas: 'Hábito a eliminar',
+    done: false,
+  },
 ];
 
 export const APPOINTMENTS: Appointment[] = [

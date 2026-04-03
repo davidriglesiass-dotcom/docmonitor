@@ -3,7 +3,7 @@ export interface Patient {
   name: string;
   initials: string;
   age: number;
-  dob: string;           // Fecha de nacimiento — formato 'YYYY-MM-DD'
+  dob: string;           // 'YYYY-MM-DD'
   gender: 'masculino' | 'femenino' | 'otro' | 'prefiero-no-decir';
   email: string;
   phone: string;
@@ -15,6 +15,20 @@ export interface Patient {
   status: 'active' | 'pending' | 'inactive';
   hasAlert?: boolean;
   alertType?: 'amber' | 'red';
+}
+
+// Indicación médica estructurada con frecuencia y duración
+export interface Treatment {
+  id: number;
+  descripcion: string;                              // Ej: 'Pastilla A'
+  dosis: string;                                    // Ej: '1 pastilla', '5ml'
+  frecuencia: number;                               // Veces — Ej: 3
+  frecuencia_unidad: 'dia' | 'semana' | 'mes';     // Por día / semana / mes
+  duracion: number;                                 // Cantidad — Ej: 4
+  duracion_unidad: 'dias' | 'semanas' | 'meses' | 'indefinido';
+  horas: string[];                                  // Ej: ['08:00','14:00','20:00']
+  notas: string;                                    // Ej: 'Tomar con comida'
+  done: boolean;
 }
 
 export interface Appointment {
