@@ -15,19 +15,19 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
   const [icdChips, setIcdChips] = useState<{ code: string; desc: string }[]>([]);
   const [tempPass, setTempPass] = useState('MiDocLink2026!');
 
-  const fields = useRef<Record<string, HTMLInputElement | null>>({});
+  const fields = useRef<Record<string, HTMLInputElement | HTMLSelectElement | null>>({});
 
   function regNext(current: number) {
     if (current === 1) {
-      const required = ['nombre', 'apellido', 'dob', 'phone', 'email'];
+      const required = ['nombre', 'apellido', 'dob', 'gender', 'phone', 'email'];
       for (const key of required) {
         const el = fields.current[key];
         if (el && !el.value.trim()) {
-          el.style.borderColor = 'var(--rojo)';
-          el.focus();
+          (el as HTMLElement).style.borderColor = 'var(--rojo)';
+          (el as HTMLElement).focus();
           return;
         }
-        if (el) el.style.borderColor = '';
+        if (el) (el as HTMLElement).style.borderColor = '';
       }
     }
     setStep(current + 1);
@@ -51,7 +51,7 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
   }
 
   function finish() {
-    showToast('Paciente registrada · WhatsApp enviado');
+    showToast('Paciente registrado · WhatsApp enviado');
     setTimeout(onBack, 1200);
   }
 
@@ -60,7 +60,7 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
       <button className="back-btn" onClick={onBack}>← Volver a pacientes</button>
       <div className="page-header">
         <div>
-          <div className="page-title">Registrar nueva paciente</div>
+          <div className="page-title">Registrar nuevo paciente</div>
           <div className="page-subtitle">Completa los datos en 3 pasos</div>
         </div>
       </div>
@@ -74,22 +74,62 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
           ))}
         </div>
 
-        {/* STEP 1 */}
+        {/* STEP 1 — Datos personales */}
         {step === 1 && (
           <div>
             <div className="card-title">Datos personales</div>
             <div className="form-grid">
-              <div className="form-group"><label className="form-label">Nombre *</label><input ref={el => { fields.current.nombre = el; }} className="form-input" type="text" placeholder="María" /></div>
-              <div className="form-group"><label className="form-label">Apellido *</label><input ref={el => { fields.current.apellido = el; }} className="form-input" type="text" placeholder="González" /></div>
-              <div className="form-group"><label className="form-label">Fecha de nacimiento *</label><input ref={el => { fields.current.dob = el; }} className="form-input" type="date" /></div>
-              <div className="form-group"><label className="form-label">Teléfono / WhatsApp *</label><input ref={el => { fields.current.phone = el; }} className="form-input" type="tel" placeholder="+507 6XXX-XXXX" /></div>
-              <div className="form-group full"><label className="form-label">Email *</label><input ref={el => { fields.current.email = el; }} className="form-input" type="email" placeholder="paciente@email.com" /></div>
+              <div className="form-group">
+                <label className="form-label">Nombre *</label>
+                <input
+                  ref={el => { fields.current.nombre = el; }}
+                  className="form-input" type="text" placeholder="María" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Apellido *</label>
+                <input
+                  ref={el => { fields.current.apellido = el; }}
+                  className="form-input" type="text" placeholder="González" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Fecha de nacimiento *</label>
+                <input
+                  ref={el => { fields.current.dob = el; }}
+                  className="form-input" type="date" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Género *</label>
+                <select
+                  ref={el => { fields.current.gender = el; }}
+                  className="form-select"
+                  defaultValue="">
+                  <option value="" disabled>Seleccionar...</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="otro">Otro</option>
+                  <option value="prefiero-no-decir">Prefiero no decir</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Teléfono / WhatsApp *</label>
+                <input
+                  ref={el => { fields.current.phone = el; }}
+                  className="form-input" type="tel" placeholder="+507 6XXX-XXXX" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Email *</label>
+                <input
+                  ref={el => { fields.current.email = el; }}
+                  className="form-input" type="email" placeholder="paciente@email.com" />
+              </div>
             </div>
-            <div className="form-actions"><button className="btn-primary" onClick={() => regNext(1)}>Siguiente →</button></div>
+            <div className="form-actions">
+              <button className="btn-primary" onClick={() => regNext(1)}>Siguiente →</button>
+            </div>
           </div>
         )}
 
-        {/* STEP 2 */}
+        {/* STEP 2 — Info médica */}
         {step === 2 && (
           <div>
             <div className="card-title">Información médica inicial</div>
@@ -98,14 +138,19 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
                 <label className="form-label">Diagnóstico principal (ICD-10)</label>
                 <div className="icd-wrap">
                   <span className="icd-icon">🔍</span>
-                  <input className="icd-input" type="text" autoComplete="off" placeholder="Buscar diagnóstico ICD-10..." value={icdQuery} onChange={e => searchICD(e.target.value)} />
+                  <input
+                    className="icd-input" type="text" autoComplete="off"
+                    placeholder="Buscar diagnóstico ICD-10..."
+                    value={icdQuery}
+                    onChange={e => searchICD(e.target.value)} />
                   {showIcdDd && (
                     <div className="icd-dd" style={{ display: 'block' }}>
                       {icdResults.length === 0 ? (
                         <div style={{ padding: '10px 14px', fontSize: 12, color: 'var(--gris-500)', fontStyle: 'italic' }}>Sin resultados</div>
                       ) : icdResults.map(item => (
                         <div key={item.code} className="icd-opt" onClick={() => selectICD(item.code, item.desc)}>
-                          <span className="icd-code">{item.code}</span><span className="icd-desc">{item.desc}</span>
+                          <span className="icd-code">{item.code}</span>
+                          <span className="icd-desc">{item.desc}</span>
                         </div>
                       ))}
                     </div>
@@ -113,15 +158,35 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
                 </div>
                 <div className="icd-chips" style={{ marginTop: 8 }}>
                   {icdChips.map(c => (
-                    <div key={c.code} className="icd-chip"><span className="icd-chip-code">{c.code}</span><span>{c.desc}</span><span className="icd-chip-x" onClick={() => setIcdChips(prev => prev.filter(x => x.code !== c.code))}>×</span></div>
+                    <div key={c.code} className="icd-chip">
+                      <span className="icd-chip-code">{c.code}</span>
+                      <span>{c.desc}</span>
+                      <span className="icd-chip-x" onClick={() => setIcdChips(prev => prev.filter(x => x.code !== c.code))}>×</span>
+                    </div>
                   ))}
                 </div>
               </div>
-              <div className="form-group"><label className="form-label">Alergias</label><input className="form-input" type="text" placeholder="Ej: Penicilina..." /></div>
-              <div className="form-group"><label className="form-label">Cirugías previas</label><input className="form-input" type="text" placeholder="Ej: Cesárea 2018..." /></div>
-              <div className="form-group"><label className="form-label">Medicamentos actuales</label><input className="form-input" type="text" placeholder="Ej: Metformina 500mg..." /></div>
-              <div className="form-group"><label className="form-label">Tipo de sangre</label>
-                <select className="form-select"><option>No sabe</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+              <div className="form-group">
+                <label className="form-label">Alergias</label>
+                <input className="form-input" type="text" placeholder="Ej: Penicilina..." />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Cirugías previas</label>
+                <input className="form-input" type="text" placeholder="Ej: Cesárea 2018..." />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Medicamentos actuales</label>
+                <input className="form-input" type="text" placeholder="Ej: Metformina 500mg..." />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Tipo de sangre</label>
+                <select className="form-select">
+                  <option>No sabe</option>
+                  <option>A+</option><option>A-</option>
+                  <option>B+</option><option>B-</option>
+                  <option>AB+</option><option>AB-</option>
+                  <option>O+</option><option>O-</option>
+                </select>
               </div>
             </div>
             <div className="form-actions">
@@ -131,7 +196,7 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
           </div>
         )}
 
-        {/* STEP 3 */}
+        {/* STEP 3 — Acceso app */}
         {step === 3 && (
           <div>
             <div className="card-title">Acceso a la app</div>
@@ -149,8 +214,12 @@ export default function NewPatientView({ onBack, showToast }: NewPatientViewProp
               <div className="form-group full">
                 <label className="form-label">Notificar por</label>
                 <div style={{ display: 'flex', gap: 16, marginTop: 6 }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer' }}><input type="checkbox" defaultChecked /> WhatsApp</label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer' }}><input type="checkbox" defaultChecked /> Email</label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer' }}>
+                    <input type="checkbox" defaultChecked /> WhatsApp
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer' }}>
+                    <input type="checkbox" defaultChecked /> Email
+                  </label>
                 </div>
               </div>
             </div>
