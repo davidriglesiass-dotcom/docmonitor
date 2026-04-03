@@ -1,11 +1,11 @@
 import { Patient, Appointment, WeekDay, Notification, Bloqueo, ICDCode, AdherenciaItem } from './types';
 
 export const PATIENTS: Patient[] = [
-  { id: 'monica', name: 'Mónica Varela', initials: 'MV', age: 51, email: 'monica.v@email.com', phone: '+507 6XXX-XXXX', bgColor: '#EBF1FB', textColor: '#1B3A6B', condition: 'Perimenopausia', lastVisit: 'Feb 24', nextAppt: 'Hoy 9:00 AM', status: 'active', hasAlert: true, alertType: 'red' },
-  { id: 'rosa', name: 'Rosa Pérez', initials: 'RP', age: 44, email: 'rosa.p@email.com', phone: '+507 6XXX-XXXX', bgColor: '#E0F5F2', textColor: '#0E8A7A', condition: 'Control hormonal', lastVisit: 'Mar 10', nextAppt: 'Hoy 10:30 AM', status: 'active' },
-  { id: 'carmen', name: 'Carmen López', initials: 'CL', age: 38, email: 'carmen.l@email.com', phone: '+507 6XXX-XXXX', bgColor: '#FEF3C7', textColor: '#D97706', condition: 'Primera consulta', lastVisit: '—', nextAppt: 'Hoy 12:00 PM', status: 'pending' },
-  { id: 'lucia', name: 'Lucía Morales', initials: 'LM', age: 56, email: 'lucia.m@email.com', phone: '+507 6XXX-XXXX', bgColor: '#EBF1FB', textColor: '#1B3A6B', condition: 'Revisión exámenes', lastVisit: 'Feb 15', nextAppt: 'Hoy 2:00 PM', status: 'active', hasAlert: true, alertType: 'amber' },
-  { id: 'ana', name: 'Ana García', initials: 'AG', age: 29, email: 'ana.g@email.com', phone: '+507 6XXX-XXXX', bgColor: '#FDEAEA', textColor: '#C0392B', condition: 'Urgencia pélvica', lastVisit: 'Mar 1', nextAppt: 'Hoy 3:30 PM', status: 'pending', hasAlert: true, alertType: 'red' },
+  { id: 'monica', name: 'Mónica Varela', initials: 'MV', age: 51, dob: '1974-08-12', gender: 'femenino', email: 'monica.v@email.com', phone: '+507 6XXX-XXXX', bgColor: '#EBF1FB', textColor: '#1B3A6B', condition: 'Perimenopausia', lastVisit: 'Feb 24', nextAppt: 'Hoy 9:00 AM', status: 'active', hasAlert: true, alertType: 'red' },
+  { id: 'rosa', name: 'Rosa Pérez', initials: 'RP', age: 44, dob: '1981-03-22', gender: 'femenino', email: 'rosa.p@email.com', phone: '+507 6XXX-XXXX', bgColor: '#E0F5F2', textColor: '#0E8A7A', condition: 'Control hormonal', lastVisit: 'Mar 10', nextAppt: 'Hoy 10:30 AM', status: 'active' },
+  { id: 'carmen', name: 'Carmen López', initials: 'CL', age: 38, dob: '1987-11-05', gender: 'femenino', email: 'carmen.l@email.com', phone: '+507 6XXX-XXXX', bgColor: '#FEF3C7', textColor: '#D97706', condition: 'Primera consulta', lastVisit: '—', nextAppt: 'Hoy 12:00 PM', status: 'pending' },
+  { id: 'lucia', name: 'Lucía Morales', initials: 'LM', age: 56, dob: '1969-06-18', gender: 'femenino', email: 'lucia.m@email.com', phone: '+507 6XXX-XXXX', bgColor: '#EBF1FB', textColor: '#1B3A6B', condition: 'Revisión exámenes', lastVisit: 'Feb 15', nextAppt: 'Hoy 2:00 PM', status: 'active', hasAlert: true, alertType: 'amber' },
+  { id: 'ana', name: 'Ana García', initials: 'AG', age: 29, dob: '1996-01-30', gender: 'femenino', email: 'ana.g@email.com', phone: '+507 6XXX-XXXX', bgColor: '#FDEAEA', textColor: '#C0392B', condition: 'Urgencia pélvica', lastVisit: 'Mar 1', nextAppt: 'Hoy 3:30 PM', status: 'pending', hasAlert: true, alertType: 'red' },
 ];
 
 export const APPOINTMENTS: Appointment[] = [

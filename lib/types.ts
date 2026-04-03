@@ -3,6 +3,8 @@ export interface Patient {
   name: string;
   initials: string;
   age: number;
+  dob: string;           // Fecha de nacimiento — formato 'YYYY-MM-DD'
+  gender: 'masculino' | 'femenino' | 'otro' | 'prefiero-no-decir';
   email: string;
   phone: string;
   bgColor: string;
@@ -23,7 +25,7 @@ export interface Appointment {
   reason: string;
   type: 'confirmed' | 'pending' | 'urgent';
   badges: { label: string; color: string; textColor: string }[];
-  slot: number; // 0-indexed from 8AM
+  slot: number;
 }
 
 export interface WeekDay {
